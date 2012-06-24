@@ -7,8 +7,8 @@ namespace :build do
   end
 end
 
-task :rspec => "build:parser" do
+task :spec do
   system "rspec"
 end
 
-task :default => :rspec
+task :default => ["build:parser", "spec"]
