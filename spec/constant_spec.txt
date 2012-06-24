@@ -1,7 +1,5 @@
-# constant
+@singleline
+
 null nil
-
 true true
-
 false false
-
