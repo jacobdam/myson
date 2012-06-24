@@ -3,9 +3,10 @@ require 'spec_helper'
 describe Myson do
   def self.parse_and_generate_spec(file)
     lines = File.readlines(file)
-    lines.map{ |line| line.strip }
-         .select{ |line| line != '' && line[0...1] != '#' }
-         .map{ |line| line.split(' ')}.each do |json, ruby|
+    lines = lines.map{ |line| line.strip }
+    lines = lines.select{ |line| line != '' && line[0...1] != '#' }
+    lines = lines.map{ |line| line.split(' ')}
+    lines.each do |json, ruby|
       if ruby == 'error'
         it "should parse `#{json}' and raise error" do
           expect { Myson.parse(json)}.to raise_error
