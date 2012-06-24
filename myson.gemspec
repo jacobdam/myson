@@ -17,5 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency('racc')
   
-  gem.add_development_dependency('rspec')
+  gem.add_development_dependency('rspec', '~> 2.10')
+  gem.add_development_dependency('rake')
 end
