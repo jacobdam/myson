@@ -38,13 +38,14 @@ describe Myson do
     end
     
     specs.each do |json, ruby|
+      j, r = json, ruby
       if ruby == 'error'
         it "should parse `#{json}' and raise error" do
-          expect { Myson.parse(json)}.to raise_error
+          expect{ Myson.parse(example.metadata['json']) }.to raise_error
         end
       else
         it "should parse `#{json}' to #{ruby}" do
-          Myson.parse(json).should == eval(ruby)
+          Myson.parse(j).should == eval(r)
         end
       end
     end
