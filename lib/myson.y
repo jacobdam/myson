@@ -3,16 +3,15 @@ rule
   start: document;
   
   empty: ;
-  os: token_separator | empty;
+  os: opt_token_separator;
+  opt_token_separator: token_separator | empty;
   token_separator: token_separator_chars;
   token_separator_chars: token_separator_char
     | token_separator_char token_separator_chars
     ;
   token_separator_char: whitespace_char | newline_char;
-  whitespace_char: ' ' | '\t';
-  newline_char: '\n' | 'r';
-  
-  
+  whitespace_char: ' ' | "\t";
+  newline_char: "\n" | "\r";
   
   document: object | array | primitive;
   literal: object | array | primitive;
@@ -23,6 +22,7 @@ rule
   boolean: 't' 'r' 'u' 'e' { result = true }
     | 'f' 'a' 'l' 's' 'e' { result = false }
     ;
+
   # number
   number: integer | float;
   integer: positive_integer
@@ -51,17 +51,17 @@ rule
     | 'e' '-' integer_digits { result = val.join('') }
     | 'e' '+' integer_digits { result = val.join('') }
     ;
-  # string
-  
+
   # array
   array: '[' os ']' { result = [] }
-    | '[' os array_items os ']' { result = val[2] }
+    | '[' array_items ']' { result = val[1] }
     ;
-  array_items: literal { result = [val[0]] }
-    | literal rest_array_items { result = [val[0]] + val[1] }
+  array_items: array_item { result = [val[0]] }
+    | array_item comma_array_items { result = [val[0]] + val[1] }
     ;
-  rest_array_items: rest_array_item { result = [val[0]] }
-    | rest_array_item rest_array_items { result = [val[0]] + val[1] }
+  array_item: os literal os { result = val[1] }
+  comma_array_items: comma_array_item { result = [val[0]] }
+    | comma_array_item comma_array_items { result = [val[0]] + val[1] }
     ;
-  rest_array_item: os ',' os literal { result = val[3] };
+  comma_array_item: ',' array_item { result = val[1] };
 end
