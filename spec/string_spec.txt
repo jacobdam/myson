@@ -1,0 +1,26 @@
+@linepair
+
+""
+=> ""
+
+"abcdefghijklmnopqrstuvxyz0123456789"
+=> "abcdefghijklmnopqrstuvxyz0123456789"
+
+"escaped chars \n \r \t \b \f."
+=> "escaped chars \n \r \t \b \f."
+
+"unicode  \u0000 \u1234 \u123a"
+=> "unicode  \u0000 \u1234 \u123a"
+
+
+"slash and char \\ \' \" \a \1"
+=> "slash and char \\ ' \" a 1"
+
+"""
+=> error
+
+""""
+=> error
+
+"\"
+=> error

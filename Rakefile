@@ -3,7 +3,7 @@ require "bundler/gem_tasks"
 
 namespace :build do
   task :parser do
-    system "racc lib/myson.y -o lib/myson/generated_parser.rb -g"
+    system "racc lib/myson.y -o lib/myson/generated_parser.rb -t"
   end
 end
 

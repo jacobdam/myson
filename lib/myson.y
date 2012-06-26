@@ -52,6 +52,35 @@ rule
     | 'e' '+' integer_digits { result = val.join('') }
     ;
 
+  # string
+  string: '"' string_items_opt '"' { result = val[1] };
+  string_items_opt: string_items 
+    | empty { result = '' };
+  string_items: string_item
+    | string_item string_items { result = val.join('') }
+    ;
+  string_item: escaped_char | escaped_unicode_char | slash_and_char | unescaped_char;
+  escaped_char: '\\' 'n' { result = "\n" }
+    | '\\' 'r' { result = "\r" }
+    | '\\' 't' { result = "\t" }
+    | '\\' 'b' { result = "\b" }
+    | '\\' 'f' { result = "\f" }
+    ;
+  escaped_unicode_char: '\\' 'u' hexa_digit hexa_digit hexa_digit hexa_digit { result = make_unicode_char(val[2..-1].join('').hex) };
+  hexa_digit: digit | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
+  slash_and_char: "\\" ignore_slash_char { result = val[1] };
+
+  # any_char: "\t" | "\n" | "\r" | " " | "\"" | "+" | "," | "-" | "." | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F" | "[" | "\\" | "]" | "a" | "b" | "c" | "d" | "e" | "f" | "l" | "n" | "r" | "s" | "t" | "u";
+  # ignore_slash_char = [^bfnrtu]
+  ignore_slash_char: known_ignore_slash_char | OTHER;
+  known_ignore_slash_char: "\t" | "\n" | "\r" | " " | "\"" | "+" | "," | "-" | "." | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F" | "[" | "\\" | "]" | "a" | "c" | "d" | "e" | "l" | "s";
+  
+  # # unescaped_char = [^\"\\]
+  unescaped_char: known_unescaped_char | OTHER;
+  known_unescaped_char: "\t" | "\n" | "\r" | " " | "+" | "," | "-" | "." | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F" | "[" | "]" | "a" | "b" | "c" | "d" | "e" | "f" | "l" | "n" | "r" | "s" | "t" | "u";
+
+   
+
   # array
   array: '[' os ']' { result = [] }
     | '[' array_items ']' { result = val[1] }
