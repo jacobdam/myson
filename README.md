@@ -1,6 +1,6 @@
 # Myson
 
-TODO: Write a gem description
+A JSON parser using [racc](http://i.loveruby.net/en/projects/racc/)
 
 ## Installation
 
@@ -18,7 +18,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+ruby
+```
+require 'myson'
+
+Myson.parse(json_string)
+```
 
 ## Contributing
 
