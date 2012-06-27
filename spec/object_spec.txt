@@ -1,0 +1,10 @@
+@linepair
+
+{}
+=> {}
+
+{ "foo" : "bar" }
+=> {"foo" => "bar"}
+
+{"s":"a", "n": 123.4, "t": true, "f": false, "nu": null, "":"", "ar": [123, {}], "ob": {"foo":"bar"}}
+=> {"s"=>"a", "n"=>123.4, "t"=>true, "f"=>false, "nu"=>nil, ""=>"", "ar"=>[123, {}], "ob"=>{"foo"=>"bar"}}

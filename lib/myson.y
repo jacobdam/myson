@@ -75,11 +75,9 @@ rule
   ignore_slash_char: known_ignore_slash_char | OTHER;
   known_ignore_slash_char: "\t" | "\n" | "\r" | " " | "\"" | "+" | "," | "-" | "." | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F" | "[" | "\\" | "]" | "a" | "c" | "d" | "e" | "l" | "s";
   
-  # # unescaped_char = [^\"\\]
+  # unescaped_char = [^\"\\]
   unescaped_char: known_unescaped_char | OTHER;
   known_unescaped_char: "\t" | "\n" | "\r" | " " | "+" | "," | "-" | "." | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F" | "[" | "]" | "a" | "b" | "c" | "d" | "e" | "f" | "l" | "n" | "r" | "s" | "t" | "u";
-
-   
 
   # array
   array: '[' os ']' { result = [] }
@@ -93,4 +91,16 @@ rule
     | comma_array_item comma_array_items { result = [val[0]] + val[1] }
     ;
   comma_array_item: ',' array_item { result = val[1] };
+
+  # object
+  object: '{' os '}' { result = {} }
+    | '{' object_items '}' { result = Hash[val[1]] };
+  object_items: object_item { result = [val[0]] }
+    | object_item comma_object_items { result = [val[0]] + val[1] }
+    ;
+  object_item: os string os ':' os literal os { result = [val[1], val[5]] };
+  comma_object_items: comma_object_item { result = [val[0]] }
+    | comma_object_item comma_object_items { result = [val[0]] + val[1] }
+    ;
+  comma_object_item: ',' object_item { result = val[1] };
 end

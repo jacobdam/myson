@@ -67,5 +67,9 @@ describe Myson do
     context 'string' do
       parse_and_generate_spec(File.dirname(__FILE__) + '/string_spec.txt')
     end
+
+    context 'object' do
+      parse_and_generate_spec(File.dirname(__FILE__) + '/object_spec.txt')
+    end
   end
 end
