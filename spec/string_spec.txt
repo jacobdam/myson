@@ -9,8 +9,8 @@
 "escaped chars \n \r \t \b \f."
 => "escaped chars \n \r \t \b \f."
 
-"unicode  \u0000 \u1234 \u123a"
-=> "unicode  \u0000 \u1234 \u123a"
+"unicode  \u0000 \u005a \u005A"
+=> "unicode  \x00 \x5A \x5A"
 
 
 "slash and char \\ \' \" \a \1"

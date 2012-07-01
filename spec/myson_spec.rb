@@ -66,6 +66,12 @@ describe Myson do
 
     context 'string' do
       parse_and_generate_spec(File.dirname(__FILE__) + '/string_spec.txt')
+      
+      if RUBY_VERSION >= '1.9'
+        it %Q{should parse `"unicode \u1234" to "unicode \u1234"'} do
+          Myson.parse('"unicode \u1234"').should == "unicode \u1234"
+        end
+      end
     end
 
     context 'object' do
