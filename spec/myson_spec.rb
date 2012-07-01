@@ -71,6 +71,10 @@ describe Myson do
         it %Q{should parse `"unicode \u1234" to "unicode \u1234"'} do
           Myson.parse('"unicode \u1234"').should == "unicode \u1234"
         end
+      else
+        it %Q{should parse `"unicode \\u0024 \\u00A2 \\u20AC" to "unicode \\x24 \\xC2\\xA2 \\xE2\\x82\\xAC"'} do
+          Myson.parse('"unicode \u0024 \u00A2 \u20AC"').should == "unicode \x24 \xC2\xA2 \xE2\x82\xAC"
+        end
       end
     end
 

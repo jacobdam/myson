@@ -25,7 +25,23 @@ module Myson
       end
 
       def make_unicode_char(code)
-        '' << code
+        if RUBY_VERSION >= '1.9'
+          '' << code
+        else
+          utf8 = ''
+          if code < 0x80
+            utf8 << code
+          elsif code < 0x800
+            utf8 << (0xC0 | (code >> 6))
+            utf8 << (0x80 | (code & 0x3F))
+          else
+            utf8 << (0xE0 | (code >> 12))
+            utf8 << (0x80 | ((code >> 6) & 0x3F))
+            utf8 << (0x80 | (code & 0x3F))
+          end
+
+          utf8
+        end
       end
   end
 end
