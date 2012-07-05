@@ -47,10 +47,12 @@ rule
   exp_float_digits: integer_digits float_exp_digits { result = val.join('') }
     | simple_float_digits float_exp_digits { result = val.join('') }
     ;
-  float_exp_digits: 'e' integer_digits { result = val.join('') }
-    | 'e' '-' integer_digits { result = val.join('') }
-    | 'e' '+' integer_digits { result = val.join('') }
+  float_exp_digits: float_exp_indicator integer_digits { result = val.join('') }
+    | float_exp_indicator '-' integer_digits { result = val.join('') }
+    | float_exp_indicator '+' integer_digits { result = val.join('') }
     ;
+  float_exp_indicator: 'e' | 'E';
+  
 
   # string
   string: '"' string_items_opt '"' { result = val[1] };
