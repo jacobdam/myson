@@ -1,4 +1,4 @@
-@singleline
+@singleline @array_wrapper
 
 null nil
 true true

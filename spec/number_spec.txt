@@ -1,4 +1,4 @@
-@singleline
+@singleline @array_wrapper
 
 0 0
 1 1

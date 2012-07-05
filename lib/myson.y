@@ -13,7 +13,7 @@ rule
   whitespace_char: ' ' | "\t";
   newline_char: "\n" | "\r";
   
-  document: object | array | primitive;
+  document: object | array | null;
   literal: object | array | primitive;
   primitive: null | boolean | number | string;
   

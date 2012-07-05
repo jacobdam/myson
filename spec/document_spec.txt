@@ -1,0 +1,23 @@
+@linepair
+# JSON document is only on of 3 types: null, array, object.
+
+null
+=> nil
+
+{ "foo": "bar" }
+=> { "foo" => "bar" }
+
+[ "foo", "bar" ]
+=> [ "foo", "bar" ]
+
+true
+=> error
+
+false
+=> error
+
+"string"
+=> error
+
+1234
+=> error

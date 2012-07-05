@@ -41,11 +41,19 @@ describe Myson do
       j, r = json, ruby
       if ruby == 'error'
         it "should parse `#{json}' and raise error" do
-          expect{ Myson.parse(example.metadata['json']) }.to raise_error
+          if directives.include?('array_wrapper')
+            expect{ Myson.parse('[' + j + ']') }.to raise_error
+          else
+            expect{ Myson.parse(j) }.to raise_error
+          end
         end
       else
         it "should parse `#{json}' to #{ruby}" do
-          Myson.parse(j).should == eval(r)
+          if directives.include?('array_wrapper')
+            Myson.parse('[' + j + ']').should == [eval(r)]
+          else
+            Myson.parse(j).should == eval(r)
+          end
         end
       end
     end
@@ -69,17 +77,21 @@ describe Myson do
       
       if RUBY_VERSION >= '1.9'
         it %Q{should parse `"unicode \u1234" to "unicode \u1234"'} do
-          Myson.parse('"unicode \u1234"').should == "unicode \u1234"
+          Myson.parse('["unicode \u1234"]').should == ["unicode \u1234"]
         end
       else
         it %Q{should parse `"unicode \\u0024 \\u00A2 \\u20AC" to "unicode \\x24 \\xC2\\xA2 \\xE2\\x82\\xAC"'} do
-          Myson.parse('"unicode \u0024 \u00A2 \u20AC"').should == "unicode \x24 \xC2\xA2 \xE2\x82\xAC"
+          Myson.parse('["unicode \u0024 \u00A2 \u20AC"]').should == ["unicode \x24 \xC2\xA2 \xE2\x82\xAC"]
         end
       end
     end
 
     context 'object' do
       parse_and_generate_spec(File.dirname(__FILE__) + '/object_spec.txt')
+    end
+
+    context 'document' do
+      parse_and_generate_spec(File.dirname(__FILE__) + '/document_spec.txt')
     end
   end
 end
