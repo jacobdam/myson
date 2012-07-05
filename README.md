@@ -1,5 +1,7 @@
 # Myson
 
+[![Build Status](https://secure.travis-ci.org/jacobdam/myson.png?branch=master)](http://travis-ci.org/jacobdam/myson)
+
 A JSON parser using [racc](http://i.loveruby.net/en/projects/racc/)
 
 ## Installation
