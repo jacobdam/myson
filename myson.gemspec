@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Myson::VERSION
 
   gem.add_runtime_dependency('racc')
+  gem.add_runtime_dependency('rlex')
   
   gem.add_development_dependency('rspec', '~> 2.10')
   gem.add_development_dependency('rake')
